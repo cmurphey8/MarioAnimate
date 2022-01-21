@@ -51,6 +51,7 @@ public class MarioAnimate
             marioHop(mariox, marioy, jump, bg);
 
             // update (mariox, marioy) coordinates
+            // Q. Why do we subtract jumpModel from marioy?
             mariox += 50;
             marioy -= jumpModel(50);
 
