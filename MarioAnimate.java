@@ -20,12 +20,8 @@ import java.io.IOException;
 
 public class MarioAnimate
 {
-    // global variables defining the size of our DrawingPanel
-    static int width = 575;
-    static int height = 400;
-
-    // global variables panel & graphics
-    static DrawingPanel panel = new DrawingPanel(width, height);
+    // global variables define new instance of panel and grab its graphics container
+    static DrawingPanel panel = new DrawingPanel(575, 400);
     static Graphics2D g = panel.getGraphics();
 
     // main routine tests helper method printPyramid
