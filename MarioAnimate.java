@@ -13,17 +13,15 @@
 //*******************************************************************
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Color;
 import javax.imageio.ImageIO;
 import java.io.File; 
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 
-
 public class MarioAnimate
 {
     // global variables define new instance of panel and grab its graphics container
-    static DrawingPanel panel = new DrawingPanel(500, 500);
+    static DrawingPanel panel = new DrawingPanel(575, 400);
     static Graphics2D g = panel.getGraphics();
 
     // set up off screen scene and off screen graphics object to enable double buffering
@@ -55,9 +53,7 @@ public class MarioAnimate
             marioHop(mariox, marioy, jump, bg);
 
             // update (mariox, marioy) coordinates
-            // Q. Why do we subtract jumpModel from marioy?
-            
-            // can just subtract 50 instead od jumpModel(50)
+            // Q. Why do we add to mariox, but subtract from marioy?
             mariox += 50;
             marioy -= 50;
 
@@ -92,86 +88,19 @@ public class MarioAnimate
         for (double t = 0; t < 1; t += FRAME_T/1000.0) 
         {
             // WE DO: draw background from bg image file onto off screen image
-            osg.drawImage(bg, 0, 0, null);
 
-            // WE DO: draw mario jumping from relative coordinates (mariox,
-            // marioy)
-            // find relationship between a and v knowing that it takes 1 second
-            // and the displacement is -50
-            // solution:
-            // -50 = v + .5 * a
-            // a = -2v-100
-            // v=-300, a=500 is one option that looks reasonable.
-            // you can pick any two values that satisfy the relationship above
-            osg.drawImage(jump, (int)(mariox + 50*t), (int)(position(marioy, -300, 500, t)), null);
+            // We DO: update mario's x, y coordinates for each time-step
             
-            // copy off screen image onto DrawingPanel
-            g.drawImage(offscreen, 0, 0, null);
+            // WE DO: copy off screen image onto DrawingPanel
 
             // WE DO: sleep for FRAME_T milliseconds
-            panel.sleep(FRAME_T);
+            
         }     
     }
-
-    // displacement formula to find mario's current position
-    public static double position(double initPos, 
-                                  double v, 
-                                  double a, 
-                                  double t) {
-        return initPos + v * t + .5 * a * t * t;
-    }
-
-    // We discussed re-using code for drawing pyramids vs drawing images
-    // pros: building something up over time giving a sense that previous
-    //       activities had value going forward
-    // cons: more source code given out, potentially slowing things down or
-    //       leading to more questions that aren't directly related to the main task
-    // Either is fine with me. If re-using code, fill in below.  Otherwise, remove
     
-
-    // helper method to draw a box with 3d effects
-    // whose top-left corner is x, y
-    public static void drawBox(int x, int y, Graphics2D g) 
-    {      
-        // define (r, g, b) Colors
-        Color brown = new Color(150, 75, 0);
-        Color chocolate = new Color(210,105,30);
-
-        // box size
-        int sz = 25;
-
-        //-------------------------------------------------------------//
-        // WE DO: 3D box effects
-
-        // 3d box effects - buffer size
-        int buffer = 5;
-
-        // 3D box effects - outer box
-
-        // 3D box effects - cross lines
-
-        // 3D box effects - inner box over cross lines
-
-        // 3D box effects - outer outline
-
-        //-------------------------------------------------------------//
-    }
-
-    public static void drawRow(int x, int y, int length, Graphics2D g)
-    {
-        // WE DO: row for LHS pyramid
-        
-    }
-
-    // method to draw LHS and RHS pyramids
-    public static void drawPyramid(int size, Graphics2D g) 
-    {
-        // starting points for x, y
-        int x = 50;
-        int y = 300;
-
-        // WE DO: draw the pyramids, row by row
-      
+    // displacement formula to find mario's current position
+    public static int pos(double p0, double vel, double acc, double t) {
+        // graphics only accepts int coordinates
+        return (int) (p0 + vel * t + .5 * acc * t * t);
     }
 }
-
