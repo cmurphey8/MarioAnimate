@@ -94,7 +94,7 @@ public class MarioAnimate
             // WE DO: copy off screen image onto DrawingPanel
 
             // WE DO: sleep for FRAME_T milliseconds
-            
+
         }     
     }
     
